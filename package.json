@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/devmcdonough/my-first-package/issues"
   },
-  "homepage": "https://github.com/devmcdonough/my-first-package"
+  "homepage": "https://github.com/devmcdonough/my-first-package",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
