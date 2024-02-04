@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-    morgan = require('morgan');
 const app = express();
 
 // Logging
@@ -9,48 +8,46 @@ app.use(morgan('common'));
 // Movie Json
 let tenMovies = [
     {
-        title: Under_the_Silver_Lake,
-        genre: Mystery
+        title: "Under_the_Silver_Lake",
+        genre: "Mystery"
     },
     {
-        title: Hellraiser,
-        genre: Horror
+        title: "Hellraiser",
+        genre: "Horror"
     },
     {
-        title: Rear_Window,
-        genre: Mystery
+        title: "Rear_Window",
+        genre: "Mystery"
     },
     {
-        title: Memories_of_Murder,
-        genre: Mystery
+        title: "Memories_of_Murder",
+        genre: "Mystery"
     },
     {
-        title: Baraka,
-        genre: Documentary
+        title: "Baraka",
+        genre: "Documentary"
     },
     {
-        title: Zodiac,
-        genre: Mystery
+        title: "Zodiac",
+        genre: "Mystery"
     },
     {
-        title: Total_Recall,
-        genre: Action
+        title: "Total_Recall",
+        genre: "Action"
     },
     {
-        title: Thief,
-        genre: Thriller
+        title: "Thief",
+        genre: "Thriller"
     },
     {
-        title: Mulholland_Drive,
-        genre: Mystery
+        title: "Mulholland_Drive",
+        genre: "Mystery"
     },
     {
-        title: Goodfellas,
-        genre: Crime
+        title: "Goodfellas",
+        genre: "Crime"
     }
 ]
-
-
 
 // Route to home
 app.get('/', (req, res) => {
@@ -58,9 +55,8 @@ app.get('/', (req, res) => {
 });
 
 // Route to json
-app.get('/movies', (req, res, next) => {
+app.get('/movies', (req, res) => {
     res.json(tenMovies);
-    next();
 });
 
 app.use('/documentation', express.static('public'));
