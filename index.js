@@ -12,6 +12,14 @@ const express = require('express');
 // Logging
 app.use(morgan('common'));
 
+// Users? Not sure this is needed
+let users = [
+    {
+    id: 1,
+    username: 'markb'
+    }
+];
+
 // Movie Json
 let tenMovies = [
     {
@@ -122,10 +130,19 @@ app.post('/users', (req, res) =>{
 
 // Allow users to update their username
 app.put('/users/:id/username', (req, res) => {
-    let user = users.find((user) => {
-        return user.username === req.params.name 
+    const id = req.params.id;
+    const username = req.body.username;
+
+    let user = users.find(user => user.id == id);
+
+    if (user) {
+        user.username = username;
+        res.send({ message: 'User updated', user});
+    } else {
+        res.status(404).send('User not found');
+    }
     });
-});
+
 
 // Allow users to add a movie to their list of favorites
 app.post('/users/:id/:title', (req, res) => {
@@ -134,16 +151,21 @@ app.post('/users/:id/:title', (req, res) => {
     
     let user = users.find(user => user.id == id);
 
-    if (user) {
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
+
+    if (!user.favoriteMovies) {
+        user.favoriteMovies = [];
+    }
+  
         user.favoriteMovies.push(title);
         res.status(200).send(title + ' has been added to list');
-    } else {
-        res.status(400).send('User not found');
-    }
+    
 });
 
 // Allow users to remove a movie from their list of favorites
-app.delete('users/:id/:title', (req, res) => {
+app.delete('/users/:id/:title', (req, res) => {
     const id = req.params.id;
     const title = req.params.title;
 
@@ -158,7 +180,7 @@ app.delete('users/:id/:title', (req, res) => {
 })
 
 // Allow user to delete their account
-app.delete('users/:id', (req, res) => {
+app.delete('/users/:id', (req, res) => {
     const id = req.params.id;
 
     let user = users.find( user => user.id == id );
