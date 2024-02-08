@@ -15,44 +15,54 @@ app.use(morgan('common'));
 // Movie Json
 let tenMovies = [
     {
-        title: "Under_the_Silver_Lake",
-        genre: "Mystery"
+        title: "under_the_silver_lake",
+        genre: "mystery",
+        director: "david_robert_mitchell"
     },
     {
-        title: "Hellraiser",
-        genre: "Horror"
+        title: "hellraiser",
+        genre: "horror",
+        director: "clive_barker"
     },
     {
-        title: "Rear_Window",
-        genre: "Mystery"
+        title: "rear_window",
+        genre: "mystery",
+        director: "alfred_hitchcock"
     },
     {
-        title: "Memories_of_Murder",
-        genre: "Mystery"
+        title: "memories_of_murder",
+        genre: "mystery",
+        director: "bong_joon-ho"
     },
     {
-        title: "Baraka",
-        genre: "Documentary"
+        title: "baraka",
+        genre: "documentary",
+        director: "ron_fricke"
     },
     {
-        title: "Zodiac",
-        genre: "Mystery"
+        title: "zodiac",
+        genre: "mystery",
+        director: "david_fincher"
     },
     {
-        title: "Total_Recall",
-        genre: "Action"
+        title: "total_recall",
+        genre: "action",
+        director: "paul_verhoeven"
     },
     {
-        title: "Thief",
-        genre: "Thriller"
+        title: "thief",
+        genre: "thriller",
+        director: "michael_mann"
     },
     {
-        title: "Mulholland_Drive",
-        genre: "Mystery"
+        title: "mulholland_drive",
+        genre: "mystery",
+        director: "david_lynch"
     },
     {
-        title: "Goodfellas",
-        genre: "Crime"
+        title: "goodfellas",
+        genre: "crime",
+        director: "martin_scorsese"
     }
 ]
 
@@ -68,26 +78,32 @@ app.get('/movies', (req, res) => {
 
 // Gets data of one movie
 app.get('/movies/:title', (req, res) => {
-    const title = req.params.title;
-    const movie = tenMovies.find( movie => movie.title === title );
-
+    const movie = tenMovies.find((movie) => movie.title === req.params.title);
     if (movie) {
         res.json(movie);
     } else {
         res.status(404).send('Movie not found');
     }
-});
+    });
 
 // Return data about a genre by name/description
 app.get('/movies/genre/:genre', (req, res) => {
-    res.json(movies.filter((movie) =>
-    { return movie.genre === req.params.genre }));
+    const filteredMovies = tenMovies.filter((movie) => movie.genre === req.params.genre);
+    if (filteredMovies.length > 0) {
+        res.json(filteredMovies);
+    } else {
+        res.status(404).send('Genre not found')
+    }
 });
 
 // Return data about a director by name
 app.get('/movies/directors/:director', (req, res) => {
-    res.json(movies.filter((movie) => 
-    { return movie.director === req.params.director}));
+    const filteredMovies = tenMovies.filter((movie) => movie.director === req.params.director);
+    if (filteredMovies.length > 0) {
+        res.json(filteredMovies);
+    } else {
+        res.status(404).send('Director not found')
+    }
 });
 
 // Allow new users to register
