@@ -3,10 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles.css">
     <title>Movie API Documentation</title>
 </head>
 <body>
     <h1>myFlix Documentation</h1>
     <p>Here are some instructions on how to use the Movie API.</p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Request</th>
+                <th scope="col">URL</th>
+                <th scope="col">HTTP Method</th>
+                <th scope="col">Request body data method</th>
+                <th scope="col">Response body data method</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Return all movies to user</th>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>An array of JSON objects holding data about all the movies</td>
+            </tr>
+            <tr>
+                <th scope="row">Return data about a single movie by title to user</th>
+                <td>/movies/[title]</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>JSON object holding data about movie requested by title</td>
+            </tr>
+            <tr>
+                <th scope="row">Return data about a genre by name/description</th>
+                <td>movies/genre/[genre]</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>An array of JSON objects holding data about all movies in the requested genre</td>
+            </tr>
+            <tr>
+                <th scope="row">Return data about a director by name</th>
+                <td>/directors/[name]</td>
+                <td>GET</td>
+                <td>none</td>
+                <td>JSON object holding data about a director
+                    Example: <br>
+                    {
+                        id: '#', <br>
+                        name: 'Stanley Kubrick', <br>
+                        bio: 'A real good guy', <br>
+                        Birth year: 1928, <br>
+                        Death year: 1999 <br>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Allow new users to register</th>
+                <td>/users</td>
+                <td>POST</td>
+                <td>JSON object containing user details <br>
+                    Example: <br>
+                    {
+                        id: 1, <br>
+                        username: 'Sam Samon', <br>
+                        email: 'samon@sam.org', <br>
+                        password: Hello123 <br>
+                    }
+                </td>
+                <td>JSON object with details of outcome, including user ID. <br>
+                    JSON object containing user details <br>
+                    Example: <br>
+                    {
+                        username: 'Sam Samon', <br>
+                        email: 'samon@sam.org', <br>
+                        password: Hello123 <br>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Allow users to update their user info (username)</th>
+                <td>users/[userID]/username</td>
+                <td>PUT</td>
+                <td>none</td>
+                <td>A message indicating the user info was updated</td>
+            </tr>
+            <tr>
+                <th scope="row">Allow users to add a movie to their list of favorites</th>
+                <td>user/[userID]/movies/[movieID]</td>
+                <td>PUT</td>
+                <td>none</td>
+                <td>A message indicating whether the movie was successfully added</td>
+            </tr>
+            <tr>
+                <th scope="row">Allow users to remove a movie from their list of favorites</th>
+                <td>/user/[userID]/movies/[movieID</td>
+                <td>DELETE</td>
+                <td>none</td>
+                <td>A message indicating whether the movie was successfully removed</td>
+            </tr>
+            <tr>
+                <th scope="row">Allow existing users to deregister</th>
+                <td>/user/[userID]</td>
+                <td>DELETE</td>
+                <td>none</td>
+                <td>A message indicating whether the user successfully deregistered</td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js" 
+    integrity="sha384-kQtW33rZJAHj6/OIhL9MkDwGQ7nFzBHP6kI1vZ6olIH8C1LJs6RBV/vI1hCj5haM" 
+    crossorigin="anonymous"></script>
 </body>
 </html>
