@@ -35,7 +35,21 @@
                 <td>/movies/[title]</td>
                 <td>GET</td>
                 <td>none</td>
-                <td>JSON object holding data about movie requested by title</td>
+                <td>{ <br>
+                    Title: {type: String, required: true}, <br>
+                    Description: {type: String, required: true}, <br>
+                    Genre: { <br>
+                        Name: String, <br>
+                        Description: String <br>
+                    }, <br>
+                    Director: { <br>
+                        Name: String, <br>
+                        Bio: String <br>
+                    }, <br>
+                    Actors: [String], <br>
+                    ImagePath: String, <br>
+                    Featured: Boolean <br>
+                    }</td>
             </tr>
             <tr>
                 <th scope="row">Return data about a genre by name/description</th>
@@ -57,12 +71,12 @@
                 <td>/users</td>
                 <td>POST</td>
                 <td>JSON object containing user details <br>
-                    Example: <br>
-                    {
-                        id: 1, <br>
-                        username: 'Sam Samon', <br>
-                        email: 'samon@sam.org', <br>
-                        password: Hello123 <br>
+                    { <br>
+                        Username: {type: String, required: true}, <br>
+                        Password: {type: String, required: true}, <br>
+                        Email: {type: String, required: true}, <br>
+                        Birthday: Date, <br>
+                        FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }] <br>
                     }
                 </td>
                 <td>JSON object with details of outcome, including user ID. <br>

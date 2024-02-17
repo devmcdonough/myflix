@@ -1,0 +1,4 @@
+{"_id":{"$oid":"65cac0a06392697fd94d740a"},"username":"userOne","password":"password1","email":"userone@example.com","birthdate":"1990-01-01"}
+{"_id":{"$oid":"65cac0a06392697fd94d740b"},"username":"userTwo","password":"password2","email":"usertwo@example.com","birthdate":"1985-02-12","Favorite Movies":["Baraka"]}
+{"_id":{"$oid":"65cac0a06392697fd94d740d"},"username":"userFour","password":"password4","email":"userfour@example.com","birthdate":"1988-04-04"}
+{"_id":{"$oid":"65cac0a06392697fd94d740e"},"username":"userFive","password":"password5","email":"userfive@example.com","birthdate":"1995-05-15"}
