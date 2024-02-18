@@ -172,15 +172,14 @@ app.post('/users', async (req, res) => {
 
 // Get all users
 app.get('/users', async (req, res) => {
-    res.send('Route is working');
-    // await Users.find()
-    //     .then((users) => {
-    //         res.status(201).json(users);
-    //     })
-    //     .catch((err) => {
-    //         console.error(err);
-    //         res.status(500).send('Error: ' + err);
-    //     });
+    await Users.find()
+        .then((users) => {
+            res.status(201).json(users);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
 });
 
 //Get a user by username
@@ -234,7 +233,7 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
         $push: { favoriteMovies: req.params.MovieID }
     },
-    { new: true}) // This line makes sure that the updated document is returned
+    { new: true }) // This line makes sure that the updated document is returned
     .then((updatedUser) => {
         res.json(updatedUser);
     })
@@ -260,7 +259,7 @@ app.delete('/users/:id/:title', (req, res) => {
 
 // Allow user to delete their account
 app.delete('/users/:Username', async (req, res) => {
-    await Users.findOneAndRemove({ Username: req.params.Username })
+    await Users.findOneAndDelete({ Username: req.params.Username })
     .then((user) => {
         if (!user) {
             res.status(400).send(req.params.Username + ' was not found');
