@@ -23,8 +23,11 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
 
-// Allows mongoose to connect to the cfDB database
-mongoose.connect('mongodb://localhost:27017/cfDB', 
+// Allows mongoose to connect to the cfDB local database
+// mongoose.connect('mongodb://localhost:27017/cfDB', 
+// { useNewUrlParser: true, useUnifiedTopology: true});
+
+mongoose.connect(process.env.CONNECTION_URI, 
 { useNewUrlParser: true, useUnifiedTopology: true});
 
 // Logging
@@ -343,3 +346,10 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
     console.log('Listening on Port' + port);
 });
+
+// mongo "mongodb+srv://devmcdonough:Feralcat78@my-movie-library.xnftdpy.mongodb.net/cfDB?retryWrites=true&w=majority"
+// mongodb+srv://devmcdonough:Feralcat78@my-movie-library.xnftdpy.mongodb.net/cfDB?retryWrites=true&w=majority
+
+
+// mongoimport --uri mongodb+srv://devmcdonough:Ch2c32ScVmFUODbI@my-movie-library.xnftdpy.mongodb.net/myFlixDB --collection users --type json --file user_list.json --jsonArray
+
