@@ -184,7 +184,8 @@ app.post('/users',
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail()
     ],
-    passport.authenticate('jwt', { session: false }), async (req, res) => {
+    // passport.authenticate('jwt', { session: false }), 
+    async (req, res) => {
     
     // Check the validation object for errors
     let errors = validationResult(req);
@@ -351,5 +352,5 @@ app.listen(port, '0.0.0.0', () => {
 // mongodb+srv://devmcdonough:Feralcat78@my-movie-library.xnftdpy.mongodb.net/cfDB?retryWrites=true&w=majority
 
 
-// mongoimport --uri mongodb+srv://devmcdonough:Ch2c32ScVmFUODbI@my-movie-library.xnftdpy.mongodb.net/myFlixDB --collection users --type json --file user_list.json --jsonArray
+// mongoimport --uri mongodb+srv://devmcdonough:Ch2c32ScVmFUODbI@my-movie-library.xnftdpy.mongodb.net/myFlixDB --collection users --type json --file user_list.json
 
