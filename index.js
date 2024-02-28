@@ -348,9 +348,3 @@ app.listen(port, '0.0.0.0', () => {
     console.log('Listening on Port' + port);
 });
 
-// mongo "mongodb+srv://devmcdonough:Feralcat78@my-movie-library.xnftdpy.mongodb.net/cfDB?retryWrites=true&w=majority"
-// mongodb+srv://devmcdonough:Feralcat78@my-movie-library.xnftdpy.mongodb.net/cfDB?retryWrites=true&w=majority
-
-
-// mongoimport --uri mongodb+srv://devmcdonough:Ch2c32ScVmFUODbI@my-movie-library.xnftdpy.mongodb.net/myFlixDB --collection users --type json --file user_list.json
-
