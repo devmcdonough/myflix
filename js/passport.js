@@ -1,6 +1,6 @@
 const passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    Models = require('./models'),
+    Models = require('../models'),
     passportJWT = require('passport-jwt');
 
 let Users = Models.User,
@@ -15,7 +15,6 @@ passport.use(
         },
         async (username, password, callback) =>
         {
-            console.log('${username} ${password}');
             await Users.findOne({ Username: username })
             .then((user) => {
                 if (!user) {
@@ -29,7 +28,6 @@ passport.use(
                     console.log('incorrect password');
                     return callback(null, false, { message: 'incorrect password.' });
                 }
-                console.log('finished');
                 return callback(null, user);
             })
             .catch((error) => {

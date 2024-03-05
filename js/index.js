@@ -13,7 +13,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 // Imports models created in models.js
-const Models = require('./models.js');
+const Models = require('../models.js');
 
 const { check, validationResult } = require('express-validator');
 
@@ -52,73 +52,9 @@ app.use(cors({
     }
 }));
 
-
-
-let auth = require('./auth')(app);
+let auth = require('./auth.js')(app);
 const passport = require('passport');
-require('./passport');
-
-// Users? Not sure this is needed
-let users = [
-    {
-    id: 1,
-    username: 'markb'
-    }
-];
-
-// Movie Json
-let tenMovies = [
-    {
-        title: "under_the_silver_lake",
-        genre: "mystery",
-        director: "david_robert_mitchell"
-    },
-    {
-        title: "hellraiser",
-        genre: "horror",
-        director: "clive_barker"
-    },
-    {
-        title: "rear_window",
-        genre: "mystery",
-        director: "alfred_hitchcock"
-    },
-    {
-        title: "memories_of_murder",
-        genre: "mystery",
-        director: "bong_joon-ho"
-    },
-    {
-        title: "baraka",
-        genre: "documentary",
-        director: "ron_fricke"
-    },
-    {
-        title: "zodiac",
-        genre: "mystery",
-        director: "david_fincher"
-    },
-    {
-        title: "total_recall",
-        genre: "action",
-        director: "paul_verhoeven"
-    },
-    {
-        title: "thief",
-        genre: "thriller",
-        director: "michael_mann"
-    },
-    {
-        title: "mulholland_drive",
-        genre: "mystery",
-        director: "david_lynch"
-    },
-    {
-        title: "goodfellas",
-        genre: "crime",
-        director: "martin_scorsese"
-    }
-]
+require('./passport.js');
 
 // Route to home
 app.get('/', (req, res) => {
@@ -126,7 +62,7 @@ app.get('/', (req, res) => {
 });
 
 // Gets data of all movies
-app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get('/movies', async (req, res) => {
     await Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
@@ -184,9 +120,7 @@ app.post('/users',
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail()
     ],
-    // passport.authenticate('jwt', { session: false }), 
-    async (req, res) => {
-    
+    async (req, res) => {    
     // Check the validation object for errors
     let errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -260,7 +194,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), as
     if(req.user.Username !== req.params.Username){
         return res.status(400).send('Permission denied');
     }
-    //C ondition ends
+    //Condition ends
     await Users.findOneAndUpdate({ Username: req.params.Username }, 
        { $set:
         {
@@ -334,7 +268,6 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     });
 });
 
-
 app.use('/documentation', express.static('public'));
 
 // Error handling
@@ -347,4 +280,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
     console.log('Listening on Port' + port);
 });
-
