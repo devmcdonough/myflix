@@ -37,7 +37,7 @@ app.use(morgan('common'));
 // let Movie = mongoose.model('Movie', movieSchema);
 // let User = mongoose.model('User', userSchema);
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234'];
 
 const cors = require('cors');
 app.use(cors({
