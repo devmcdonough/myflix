@@ -52,9 +52,9 @@ app.use(cors({
     }
 }));
 
-let auth = require('./auth.js')(app);
+let auth = require('./js/auth.js')(app);
 const passport = require('passport');
-require('./passport.js');
+require('./js/passport.js');
 
 // Route to home
 app.get('/', (req, res) => {
