@@ -13,7 +13,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 // Imports models created in models.js
-const Models = require('.js/models.js');
+const Models = require('./js/models.js');
 
 const { check, validationResult } = require('express-validator');
 
