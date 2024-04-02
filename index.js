@@ -238,10 +238,7 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
    )
 .then(updatedUser => {
     if (updatedUser) {
-        res.json({
-            message: 'Movie removed from favorites',
-            FavoriteMovies: updatedUser.FavoriteMoviesavoriteMovies
-        });
+        res.json(updatedUser);
     } else {
         res.status(404).send('Not found');
     }
