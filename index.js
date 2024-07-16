@@ -1,32 +1,28 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const uuid = require('uuid');
 const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
 const cors = require('cors');
-
-const app = express();
-app.use(bodyParser.json());
-
 const mongoose = require('mongoose');
 const Models = require('./js/models.js');
 const { check, validationResult } = require('express-validator');
+const passport = require('passport');
+require('./js/auth.js')(app);
+require('./js/passport.js');
+
+const app = express();
+app.use(bodyParser.json());
+app.use(morgan('common'));
 
 const Movies = Models.Movie;
 const Users = Models.User;
-const Genres = Models.Genre;
-const Directors = Models.Director;
 
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-
-app.use(morgan('common'));
 
 let allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:1234',
   'https://myflixcinematheque.netlify.app',
-  'https://devmcdonough.github.io/myFlix-Angular-client2'
+  'https://devmcdonough.github.io'
 ];
 
 app.use(cors({
@@ -40,12 +36,45 @@ app.use(cors({
   }
 }));
 
-let auth = require('./js/auth.js')(app);
-const passport = require('passport');
-require('./js/passport.js');
-
 app.get('/', (req, res) => {
   res.send('Where are all the movies about sand? Our finest material.');
+});
+
+app.post('/users', [
+  check('Username', 'Username is required').isLength({ min: 5 }),
+  check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], async (req, res) => {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
+  await Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + ' already exists');
+      } else {
+        Users.create({
+          Username: req.body.Username,
+          Password: hashedPassword,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
+        })
+          .then((user) => { res.status(201).json(user) })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+          });
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
 });
 
 app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -59,16 +88,9 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
     });
 });
 
-// Add other routes here...
-
-app.use('/documentation', express.static('public'));
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Oh no!');
-});
+// Other routes...
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
-  console.log('Listening on Port' + port);
+  console.log('Listening on Port ' + port);
 });
