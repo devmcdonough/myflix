@@ -37,7 +37,12 @@ app.use(morgan('common'));
 // let Movie = mongoose.model('Movie', movieSchema);
 // let User = mongoose.model('User', userSchema);
 
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflixcinematheque.netlify.app'];
+let allowedOrigins = [
+    'http://localhost:8080', 
+    'http://localhost:1234', 
+    'https://myflixcinematheque.netlify.app',
+    'https://devmcdonough.github.io'
+];
 
 const cors = require('cors');
 app.use(cors({
