@@ -25,6 +25,9 @@ let allowedOrigins = [
   'https://devmcdonough.github.io'
 ];
 
+/**
+ * Middleware to handle CORS.
+ */
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
@@ -36,10 +39,20 @@ app.use(cors({
   }
 }));
 
+/**
+ * GET: Returns a welcome message.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ */
 app.get('/', (req, res) => {
   res.send('Where are all the movies about sand? Our finest material.');
 });
 
+/**
+ * POST: Registers a new user.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ */
 app.post('/users', [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -77,6 +90,11 @@ app.post('/users', [
     });
 });
 
+/**
+ * GET: Returns a list of all movies.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ */
 app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.find()
     .then((movies) => {
@@ -90,6 +108,10 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
 
 // Other routes...
 
+/**
+ * Starts the server on the specified port.
+ * @param {number} port - The port number.
+ */
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
   console.log('Listening on Port ' + port);
