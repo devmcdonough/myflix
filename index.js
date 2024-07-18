@@ -6,12 +6,13 @@ const mongoose = require('mongoose');
 const Models = require('./js/models.js');
 const { check, validationResult } = require('express-validator');
 const passport = require('passport');
-require('./js/auth.js')(app);
-require('./js/passport.js');
+
 
 const app = express();
 app.use(bodyParser.json());
 app.use(morgan('common'));
+require('./js/auth.js')(app);
+require('./js/passport.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
