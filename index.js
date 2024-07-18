@@ -7,12 +7,9 @@ const Models = require('./js/models.js');
 const { check, validationResult } = require('express-validator');
 const passport = require('passport');
 
-
 const app = express();
 app.use(bodyParser.json());
 app.use(morgan('common'));
-require('./js/auth.js')(app);
-require('./js/passport.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -40,6 +37,9 @@ app.use(cors({
     return callback(null, true);
   }
 }));
+
+require('./js/auth.js')(app);
+require('./js/passport.js');
 
 /**
  * GET: Returns a welcome message.
