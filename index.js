@@ -22,7 +22,7 @@ let allowedOrigins = [
   'https://myflixcinematheque.netlify.app',
   'https://devmcdonough.github.io',
   'https://devmcdonough.github.io/myFlix-Angular-client2',
-  'https://localhost:4200'
+  'http://localhost:4200'
 ];
 
 /**
